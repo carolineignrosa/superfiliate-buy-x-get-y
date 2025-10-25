@@ -1,0 +1,17 @@
+{
+  "discounts": {
+    "prerequisite_skus": ["PEANUT-BUTTER", "COCOA", "FRUITY"],
+    "eligible_skus": ["BANANA-CAKE", "COCOA", "CHOCOLATE"],
+    "discount_unit": "percentage",
+    "discount_value": "50.0"
+  },
+  "data": {
+    "reference": "2d832fe0-6c96-4515-9be7-4c00983539c1",
+    "lineItems": [
+      { "name": "Peanut Butter", "price": "39.0", "sku": "PEANUT-BUTTER" },
+      { "name": "Fruity", "price": "34.99", "sku": "FRUITY" },
+      { "name": "Chocolate", "price": "32", "sku": "CHOCOLATE" },
+      { "name": "Cocoa", "price": "10", "sku": "COCOA" }
+    ]
+  }
+}
