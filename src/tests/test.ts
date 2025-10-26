@@ -1,16 +1,19 @@
-import { createDiscountService } from "./discountService.js";
+import { GlobalConfig } from "../types";
+import { createDiscountService } from "../services/discountService";
 
-function test(expectedReturnValue, data) {
+function test(expectedReturnValue: string, data: GlobalConfig["data"]) {
   console.log("New test for", data.reference);
 
-  const testConfig = {
+  const testConfig: GlobalConfig = {
     discounts: {
       prerequisite_skus: ["PEANUT-BUTTER", "COCOA", "FRUITY"],
       eligible_skus: ["BANANA-CAKE", "COCOA", "CHOCOLATE"],
       discount_unit: "percentage",
       discount_value: "50.0",
     },
+    data,
   };
+
   const service = createDiscountService(testConfig);
   const result = service.run(data);
 
@@ -21,7 +24,8 @@ function test(expectedReturnValue, data) {
   console.log(successColor, "Test succeeded! \n");
 }
 
-test(110.99, {
+/** Cocoa as eligible */
+test("110.99", {
   reference: "2d832fe0-6c96-4515-9be7-4c00983539c1",
   lineItems: [
     { name: "Peanut Butter", price: "39.0", sku: "PEANUT-BUTTER" },
@@ -31,7 +35,8 @@ test(110.99, {
   ],
 });
 
-test(110.99, {
+/** Cocoa as eligible in a different order */
+test("110.99", {
   reference: "2d832fe0-6c96-4515-9be7-4c00983539c2",
   lineItems: [
     { name: "Cocoa", price: "10", sku: "COCOA" },
@@ -41,7 +46,8 @@ test(110.99, {
   ],
 });
 
-test(26, {
+/** Cocoa as pre requisite */
+test("26.00", {
   reference: "2d832fe0-6c96-4515-9be7-4c00983539c3",
   lineItems: [
     { name: "Cocoa", price: "10", sku: "COCOA" },
@@ -49,7 +55,8 @@ test(26, {
   ],
 });
 
-test(144.99, {
+/** Different set of items */
+test("144.99", {
   reference: "2d832fe0-6c96-4515-9be7-4c00983539c4",
   lineItems: [
     { name: "Peanut Butter", price: "39.0", sku: "PEANUT-BUTTER" },
@@ -60,12 +67,14 @@ test(144.99, {
   ],
 });
 
-test(39, {
+/** No eligible and consequently no discount */
+test("39.00", {
   reference: "2d832fe0-6c96-4515-9be7-4c00983539c5",
   lineItems: [{ name: "Peanut Butter", price: "39.0", sku: "PEANUT-BUTTER" }],
 });
 
-test(32, {
+/** No pre requisite and consequently no discount */
+test("32.00", {
   reference: "2d832fe0-6c96-4515-9be7-4c00983539c6",
   lineItems: [{ name: "Chocolate", price: "32.0", sku: "CHOCOLATE" }],
 });

@@ -1,11 +1,12 @@
 {
   "name": "buy-x-get-y",
   "version": "1.0.0",
-  "main": "index.js",
-  "type": "module",
+  "main": "index.ts",
   "scripts": {
-    "api": "nodemon src/index.js",
-    "test": "node src/test.js"
+    "build": "tsc",
+    "server": "npm run build && node ./dist/index.js",
+    "api": "tsx watch ./src/index.ts",
+    "test": "tsx src/tests/*"
   },
   "keywords": [],
   "author": "",
@@ -15,6 +16,9 @@
     "express": "^5.1.0"
   },
   "devDependencies": {
-    "nodemon": "^3.1.10"
+    "@types/express": "^5.0.4",
+    "@types/node": "^24.9.1",
+    "tsx": "^4.20.6",
+    "typescript": "^5.9.3"
   }
 }
