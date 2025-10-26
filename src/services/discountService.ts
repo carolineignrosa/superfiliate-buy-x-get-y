@@ -26,7 +26,7 @@ export function createDiscountService(globalConfig: GlobalConfig) {
 
   function getCheapestEligibleItem(
     lineItems: Item[],
-    preRequisiteItems: Item[]
+    prerequisiteItems: Item[]
   ): Item | null {
     let cheapestItem: Item | null = null;
     lineItems.forEach((item, index) => {
@@ -34,7 +34,7 @@ export function createDiscountService(globalConfig: GlobalConfig) {
       if (
         canUpdateCheapestItem({
           cheapestItem,
-          preRequisiteItems,
+          prerequisiteItems,
           item: currentItem,
         })
       ) {
@@ -49,7 +49,7 @@ export function createDiscountService(globalConfig: GlobalConfig) {
     return cheapestItem;
   }
 
-  function getPreRequisites(lineItems: Item[]): Item[] {
+  function getPrerequisites(lineItems: Item[]): Item[] {
     return lineItems.reduce((acc, item, index) => {
       if (globalConfig.discounts.prerequisite_skus.includes(item.sku)) {
         acc.push({ ...item, index });
@@ -59,29 +59,29 @@ export function createDiscountService(globalConfig: GlobalConfig) {
   }
 
   function canUpdateCheapestItem(args: UpdateCheapestItemArgs): boolean {
-    const { cheapestItem, preRequisiteItems, item } = args;
+    const { cheapestItem, prerequisiteItems, item } = args;
 
     const isEligible = globalConfig.discounts.eligible_skus.includes(item.sku);
     const isCheaper =
       !cheapestItem || Number(item.price) < Number(cheapestItem.price);
-    const isNotPreRequisite =
-      preRequisiteItems.length > 1 ||
-      preRequisiteItems[0]?.index !== item.index;
+    const isNotPrerequisite =
+      prerequisiteItems.length > 1 ||
+      prerequisiteItems[0]?.index !== item.index;
 
-    return isEligible && !!isNotPreRequisite && isCheaper;
+    return isEligible && !!isNotPrerequisite && isCheaper;
   }
 
   function run(data: GlobalConfig["data"]): string {
-    const preRequisites = getPreRequisites(data.lineItems);
+    const prerequisites = getPrerequisites(data.lineItems);
 
-    if (preRequisites.length < 1) {
+    if (prerequisites.length < 1) {
       console.log("No discounts available.");
       return calculateFinalPrice(data.lineItems).toFixed(2);
     }
 
     const cheapestEligibleItem = getCheapestEligibleItem(
       data.lineItems,
-      preRequisites
+      prerequisites
     );
 
     return calculateFinalPrice(data.lineItems, cheapestEligibleItem).toFixed(2);

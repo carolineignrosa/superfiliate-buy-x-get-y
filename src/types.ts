@@ -20,6 +20,6 @@ export type Item = {
 
 export type UpdateCheapestItemArgs = {
   cheapestItem: Item | null;
-  preRequisiteItems: Item[];
+  prerequisiteItems: Item[];
   item: Item;
 };

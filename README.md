@@ -2,7 +2,7 @@
 
 ### Description
 
-This app contains a service that calculates discounts for a given list of cart items. To be able to calculate, the service needs to receive the list of items to calculate and a JSON config argument to get the discount definitions. If the requirements are not met, no discount will be applied, and the sum of all prices as it is will be returned.
+This app contains a service that calculates discounts for a given list of cart items. To be able to calculate, the service needs to receive the list of items to calculate and a JSON config argument to get the discount definitions. If the requirements are not met, no discount will be applied, and the original prices sum will be returned.
 
 #### Requirements
 
@@ -21,7 +21,7 @@ I've build the existing test file (/tests/test.ts) to valdiate different data se
 
 1. Run `npm install`
 2. Define the test cases in the test file by calling the `test()` function passing two args
-3. The first arg should be the expected final price to the cart items
+3. The first arg should be the expected final price to the cart items sum
 4. The second one should be the data to be tested
 
 Example
@@ -40,7 +40,7 @@ test("110.99", {
 
 You can define multiple test cases by calling the `test` function multiple times.
 
-3. Run `npm run test`
+5. Run `npm run test`
 
 You should be able to see which tests succeeded, and also see the failed the ones with the comparison of the expected and the returned values.
 
@@ -83,4 +83,4 @@ You should receive a JSON response with the `finalPrice` prop if everything work
 
 1. Add a interface to allow users to define the config and the items list
 2. Handle different discount types than 'percentage'
-3. Define more strict types for SKUs based on the possible items
+3. Define more strict types for the SKUs based on the possible items
