@@ -1,10 +1,18 @@
-import calculateCartPrice from "./calculateCartPrice.js";
+import { createDiscountService } from "./discountService.js";
 
 function test(expectedReturnValue, data) {
-  console.log("New test for:", data.reference);
+  console.log("New test for", data.reference);
 
-  const result = calculateCartPrice(data);
-  console.log("Final price:", result);
+  const testConfig = {
+    discounts: {
+      prerequisite_skus: ["PEANUT-BUTTER", "COCOA", "FRUITY"],
+      eligible_skus: ["BANANA-CAKE", "COCOA", "CHOCOLATE"],
+      discount_unit: "percentage",
+      discount_value: "50.0",
+    },
+  };
+  const service = createDiscountService(testConfig);
+  const result = service.run(data);
 
   if (expectedReturnValue != result)
     console.error(`Expected ${expectedReturnValue} but received ${result}`);
