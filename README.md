@@ -4,7 +4,7 @@
 
 This app contains a service that calculates discounts for a given list of cart items. To be able to calculate, the service needs to receive the list of items to calculate and a JSON config argument to get the discount definitions. If the requirements are not met, no discount will be applied, and the sum of all prices as it is will be returned.
 
-### Requirements
+#### Requirements
 
 1. If there's no prerequisite item, no discount should be applied
 2. If there's no eligible item, no discount should be applied
@@ -13,7 +13,7 @@ This app contains a service that calculates discounts for a given list of cart i
 
 ### How to run
 
-There's two ways to run the `discoutService`:
+There's two ways to run the discount service:
 
 #### Running tests
 
@@ -79,7 +79,7 @@ This mode is to be used as an API, which can be called with a curl request, for 
 
 You should receive a JSON response with the `finalPrice` prop if everything works fine, and an error JSON if something is wrong when trying to run the discount service.
 
-### Future improvements
+### Possible future improvements
 
 1. Add a interface to allow users to define the config and the items list
 2. Handle different discount types than 'percentage'
