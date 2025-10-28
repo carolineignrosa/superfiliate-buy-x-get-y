@@ -1,6 +1,8 @@
 import { GlobalConfig, Item, UpdateCheapestItemArgs } from "../types";
 
+// PRO: Clean service, great usage of the factory pattern.
 export function createDiscountService(globalConfig: GlobalConfig) {
+  // CON: Could have used as a helper function instead of a private service one.
   function calculateDiscount(price: number, discount: string) {
     return price - price * (Number(discount) / 100);
   }
@@ -64,6 +66,7 @@ export function createDiscountService(globalConfig: GlobalConfig) {
     const isEligible = globalConfig.discounts.eligible_skus.includes(item.sku);
     const isCheaper =
       !cheapestItem || Number(item.price) < Number(cheapestItem.price);
+    // PRO: Checking if the item is not a prerequisite, since if it is, it should not be eligible for the discount.
     const isNotPrerequisite =
       prerequisiteItems.length > 1 ||
       prerequisiteItems[0]?.index !== item.index;
