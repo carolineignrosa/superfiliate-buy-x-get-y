@@ -2,7 +2,7 @@ import { GlobalConfig } from "../types";
 import { createDiscountService } from "../services/discountService";
 
 function test(expectedReturnValue: string, data: GlobalConfig["data"]) {
-  console.log("New test for", data.reference);
+  console.log("\nNew test for", data.reference);
 
   const testConfig: GlobalConfig = {
     discounts: {
@@ -17,11 +17,16 @@ function test(expectedReturnValue: string, data: GlobalConfig["data"]) {
   const service = createDiscountService(testConfig);
   const result = service.run(data);
 
-  if (expectedReturnValue != result)
+  const failedFeedback = () => {
     console.error(`Expected ${expectedReturnValue} but received ${result}`);
+  };
 
-  const successColor = "\x1b[32m%s\x1b[0m";
-  console.log(successColor, "Test succeeded! \n");
+  const succeededFeedback = () => {
+    const successColor = "\x1b[32m%s\x1b[0m";
+    console.log(successColor, "Test succeeded!");
+  };
+
+  expectedReturnValue != result ? failedFeedback() : succeededFeedback();
 }
 
 /** Cocoa as eligible */
